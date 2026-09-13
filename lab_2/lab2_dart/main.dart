@@ -15,26 +15,33 @@ void main() async {
   await exercise5();
 }
 
+// ---------- Exercise 1 ----------
 void exercise1() {
-  int age = 22;
-  double gpa = 2.956;
-  String name = "Bao";
+  int age = 20;
+  double gpa = 3.75;
+  String name = "An";
   bool isStudent = true;
+
   print("Tên: $name");
   print("Tuổi: $age");
   print("GPA: $gpa");
   print("Là sinh viên: $isStudent");
+
+  print("Năm sau bạn sẽ ${age + 1} tuổi");
+  print("GPA làm tròn: ${gpa.round()}");
 }
 
+// ---------- Exercise 2 ----------
 void exercise2() {
-  List<int> numbers = [10, 20, 30];
-  print("Danh sách số: $numbers");
+  List<int> numbers = [10, 20, 30, 40];
+  print("List ban đầu: $numbers");
+
   int sum = numbers[0] + numbers[1];
   bool isEqual = (numbers[0] == 10);
-  bool checkBoth = (numbers[0] < 20) && (numbers[1] > 15);
+  bool checkBoth = (numbers[0] < 20) && (numbers[1] > 10);
   String result = (sum > 25) ? "Lớn hơn 25" : "Nhỏ hơn hoặc bằng 25";
 
-  print("Tổng của hai số đầu tiên: $sum");
+  print("Tổng 2 phần tử đầu: $sum");
   print("So sánh bằng: $isEqual");
   print("Cả 2 điều kiện đúng: $checkBoth");
   print("Kết quả ternary: $result");
@@ -44,29 +51,27 @@ void exercise2() {
   fruits.add("apple");
   print("Set fruits: $fruits");
 
-  Map<String, int> studentScores = {"Alice": 90, "Bob": 85};
-  studentScores["Charlie"] = 95;
+  Map<String, int> studentScores = {"An": 8, "Binh": 9};
+  studentScores["Chi"] = 7;
 
   numbers.add(50);
   numbers.remove(10);
 
-  print("List numbers sau khi thêm và xóa: $numbers");
+  print("List sau khi add/remove: $numbers");
   print("Map studentScores: $studentScores");
-  print("Bob's score: ${studentScores["Bob"]}");
+  print("Điểm của Binh (map access): ${studentScores["Binh"]}");
 }
 
+// ---------- Exercise 3 ----------
 void exercise3() {
   int score = 75;
-  if (score >= 90)
-    print("Điểm A");
-  else if (score >= 80)
-    print("Điểm B");
-  else if (score >= 70)
-    print("Điểm C");
-  else if (score >= 60)
-    print("Điểm D");
-  else
-    print("Điểm F");
+  if (score >= 90) {
+    print("Xếp loại: Giỏi");
+  } else if (score >= 70) {
+    print("Xếp loại: Khá");
+  } else {
+    print("Xếp loại: Cần cố gắng");
+  }
 
   int day = 3;
   switch (day) {
@@ -79,23 +84,11 @@ void exercise3() {
     case 3:
       print("Thứ Tư");
       break;
-    case 4:
-      print("Thứ Năm");
-      break;
-    case 5:
-      print("Thứ Sáu");
-      break;
-    case 6:
-      print("Thứ Bảy");
-      break;
-    case 7:
-      print("Chủ Nhật");
-      break;
     default:
-      print("Ngày không hợp lệ");
+      print("Ngày khác");
   }
 
-  List<int> nums = [1, 2, 3, 4, 5];
+  List<int> nums = [1, 2, 3, 4];
 
   for (int i = 0; i < nums.length; i++) {
     print("for loop: ${nums[i]}");
@@ -105,7 +98,9 @@ void exercise3() {
     print("for-in loop: $n");
   }
 
-  nums.forEach((n) => print("forEach loop: $n"));
+  nums.forEach((n) {
+    print("forEach loop: $n");
+  });
 
   int square(int x) {
     return x * x;
@@ -113,44 +108,47 @@ void exercise3() {
 
   int cube(int x) => x * x * x;
 
-  print("Square of 3: ${square(3)}");
-  print("Cube of 3: ${cube(3)}");
+  print("Bình phương của 4: ${square(4)}");
+  print("Lập phương của 3: ${cube(3)}");
 }
 
+// ---------- Exercise 4 ----------
 class Car {
-    String brand;
-    Car(this.brand);
-    Car.unknownBrand() : brand = "Unknown";
+  String brand;
 
-    void drive() {
-        print("$brand is driving");
-    }
+  Car(this.brand);
+
+  Car.unknownBrand() : brand = "Unknown";
+
+  void drive() {
+    print("$brand đang chạy trên đường.");
+  }
 }
 
 class ElectricCar extends Car {
-    ElectricCar(String brand) : super(brand);
+  ElectricCar(String brand) : super(brand);
 
-    @override
-    void drive() {
-        print("$brand is driving silently");
-    }
+  @override
+  void drive() {
+    print("$brand (xe điện) đang chạy êm không tiếng ồn.");
+  }
 }
 
 void exercise4() {
-    Car myCar = Car("Toyota");
-    myCar.drive();
+  Car myCar = Car("Toyota");
+  myCar.drive();
 
-    Car mysteryCar = Car.unknownBrand();
-    mysteryCar.drive();
+  Car mysteryCar = Car.unknownBrand();
+  mysteryCar.drive();
 
-    ElectricCar myElectricCar = ElectricCar("Tesla");
-    myElectricCar.drive();
+  ElectricCar myTesla = ElectricCar("Tesla");
+  myTesla.drive();
 }
 
-
+// ---------- Exercise 5 ----------
 Future<String> fetchUserName() async {
-    await Future.delayed(Duration(seconds: 2));
-    return "Bao";
+  await Future.delayed(Duration(seconds: 2));
+  return "An";
 }
 
 Stream<int> countStream() async* {
@@ -164,7 +162,7 @@ Future<void> exercise5() async {
   String? nickname;
   print("Biệt danh: ${nickname ?? "Chưa đặt biệt danh"}");
 
-  nickname = "Tendou Arisu";
+  nickname = "Andy";
   print("Độ dài biệt danh: ${nickname!.length}");
 
   print("Bắt đầu tải dữ liệu người dùng...");
