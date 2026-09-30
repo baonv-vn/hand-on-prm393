@@ -30,9 +30,7 @@ class _Exercise2State extends State<Exercise2> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Exercise 2 - Input Controls Demo'),
-      ),
+      appBar: AppBar(title: const Text('Exercise 2 - Input Controls Demo')),
       body: Padding(
         padding: EdgeInsets.all(16),
         child: Column(
@@ -54,10 +52,18 @@ class _Exercise2State extends State<Exercise2> {
               'Active (Switch)',
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
             ),
-            SwitchListTile(
-              title: const Text('Is movie active?'),
-              value: _isActive,
-              onChanged: (value) => setState(() => _isActive = value),
+            Padding(
+              padding: const EdgeInsets.all(8),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Text('Is movie active?'),
+                  Switch(
+                    value: _isActive,
+                    onChanged: (value) => setState(() => _isActive = value),
+                  ),
+                ],
+              ),
             ),
             const SizedBox(height: 16),
             const Text(
@@ -69,14 +75,8 @@ class _Exercise2State extends State<Exercise2> {
               onChanged: (value) => setState(() => _genre = value),
               child: const Column(
                 children: [
-                  RadioListTile<String>(
-                    title: Text('Action'),
-                    value: 'Action',
-                  ),
-                  RadioListTile<String>(
-                    title: Text('Comedy'),
-                    value: 'Comedy',
-                  ),
+                  RadioListTile<String>(title: Text('Action'), value: 'Action'),
+                  RadioListTile<String>(title: Text('Comedy'), value: 'Comedy'),
                 ],
               ),
             ),
@@ -98,7 +98,7 @@ class _Exercise2State extends State<Exercise2> {
               ),
           ],
         ),
-      )
+      ),
     );
   }
 }
