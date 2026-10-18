@@ -19,22 +19,41 @@ class ApiService {
   static const String _baseUrl = 'https://jsonplaceholder.typicode.com';
   static const Duration _timeout = Duration(seconds: 10);
 
-  Future<List<Post>> fetchPosts() async {
-    try {
-      final response = await _client
-          .get(Uri.parse('$_baseUrl/posts'))
-          .timeout(_timeout);
-
-      if (response.statusCode != 200) {
-        throw ApiException(
-          'The server returned an error (HTTP ${response.statusCode}).',
-        );
-      }
-
+  Future<List<Post>> fetchPosts() {
+    return _guard(() async {
+      final response = await _client.get(Uri.parse('$_baseUrl/posts'));
+      _ensureStatus(response, 200);
       final decoded = json.decode(response.body) as List<dynamic>;
       return decoded
           .map((item) => Post.fromJson(item as Map<String, dynamic>))
           .toList();
+    });
+  }
+
+  Future<Post> createPost({required String title, required String body}) {
+    return _guard(() async {
+      final response = await _client.post(
+        Uri.parse('$_baseUrl/posts'),
+        headers: {'Content-Type': 'application/json; charset=UTF-8'},
+        body: json.encode({'title': title, 'body': body, 'userId': 1}),
+      );
+      _ensureStatus(response, 201);
+
+      return Post.fromJson(json.decode(response.body) as Map<String, dynamic>);
+    });
+  }
+
+  void _ensureStatus(http.Response response, int expected) {
+    if (response.statusCode != expected) {
+      throw ApiException(
+        'The server returned an error (HTTP ${response.statusCode}).',
+      );
+    }
+  }
+
+  Future<T> _guard<T>(Future<T> Function() request) async {
+    try {
+      return await request().timeout(_timeout);
     } on ApiException {
       rethrow;
     } on TimeoutException {

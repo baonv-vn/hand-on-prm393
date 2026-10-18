@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lab8_networking/services/api_service.dart';
+import 'create_post_screen.dart';
 
 import '../models/post.dart';
 
@@ -33,7 +34,20 @@ class _PostsScreenState extends State<PostsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Posts')),
+      appBar: AppBar(
+        title: const Text('Posts'),
+        actions: [
+          IconButton(
+            tooltip: 'New post',
+            icon: const Icon(Icons.add),
+            onPressed: () => Navigator.of(context).push(
+              MaterialPageRoute<void>(
+                builder: (_) => CreatePostScreen(api: widget.api),
+              ),
+            ),
+          ),
+        ],
+      ),
       body: FutureBuilder<List<Post>>(
         future: _postFuture,
         builder: (context, snapshot) {
